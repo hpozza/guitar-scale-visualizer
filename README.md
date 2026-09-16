@@ -107,6 +107,10 @@ npm run verify     # lint + test + build
 `npm run build` produces a fully static `dist/` directory. Serve it from any static host or open it
 behind a plain file server; there is nothing to configure and no runtime environment variables.
 
+Cloudflare Workers git deploys read `wrangler.jsonc`. That file points at `dist/` as static assets —
+there is no Worker `main` script. In the build settings, set **Build command** to `npm run build`
+(so `dist/` exists before `wrangler versions upload`).
+
 ## How it is put together
 
 ```
