@@ -9,7 +9,9 @@ network request after the page loads.
 
 **Fretboard**
 
-- Horizontal six-string neck in standard tuning (E A D G B E), 24 frets.
+- Horizontal six-string neck in standard tuning (E A D G B E). The default window is the full 24
+  frets; presets still jump to open, middle or upper stretches. Older saves that were still on the
+  original 0–15 default upgrade once (see [ADR 0001](docs/adr/0001-full-24-fret-neck.md)).
 - Frets are spaced by equal temperament, so they narrow toward the bridge, with a floor on cell
   width so note labels stay readable at the top of the neck.
 - Position inlays at frets 3, 5, 7, 9, 12, 15, 17, 19, 21 and 24; frets 12 and 24 get double inlays,
@@ -20,7 +22,9 @@ network request after the page loads.
 
 **Controls**
 
-- Root note (all 12 chromatic notes), scale or mode, sharp/flat spelling toggle.
+- Root note (all 12 chromatic notes), scale or mode, sharp/flat spelling toggle. Neck names follow
+  the toggle (G major + Flats writes G♭); scale-degree spelling in the study panel is unchanged
+  ([ADR 0002](docs/adr/0002-display-spelling-follows-preference.md)).
 - Fret range by number entry, sliders or presets, with graceful correction of impossible ranges.
 - Left-handed neck, note labels (names / degrees / intervals / hidden), show all notes, root notes
   only, single-interval highlight.
@@ -34,10 +38,13 @@ Pentatonic, Minor Pentatonic, Blues, Harmonic Minor and Melodic Minor.
 
 **Shapes**
 
-- Pentatonic boxes 1–5 and the seven three-notes-per-string major-scale patterns, generated for any
-  root rather than stored as fret tables.
-- Select one shape or view the whole neck; notes outside the selected shape dim, and notes shared
-  with the neighbouring shapes get a dashed ring.
+- Pentatonic boxes 1–5 (two notes per string) and seven three-notes-per-string patterns, generated
+  for any root rather than stored as fret tables. Box and Pattern buttons sit above the neck.
+- Choosing a shape family lights Box 1 / Pattern 1 immediately. Notes outside the selected shape
+  dim; notes shared with the neighbouring shapes get a dashed ring. Whole neck remains a separate
+  choice.
+- Three-notes-per-string on pentatonic or blues uses the parent seven-note scale (Aeolian or Ionian)
+  and says so ([ADR 0004](docs/adr/0004-three-notes-per-string-from-parent-scale.md)).
 - Previous/next controls, plus a panel that explains how the shape moves with the root.
 
 **Harmony**
@@ -45,10 +52,12 @@ Pentatonic, Minor Pentatonic, Blues, Harmonic Minor and Melodic Minor.
 - Diatonic triads and seventh chords for every seven-note scale, including the augmented triad in
   harmonic minor. Pentatonic and blues scales borrow their harmony from their parent scale and the
   panel says so.
-- Select degrees I–VII to light the triad up on the neck; root, third, fifth and seventh get
-  different outer ring styles rather than relying on colour alone.
+- Roman numerals I–VII sit above the neck. Select a degree to light the triad: chord tones get
+  R / 3 / 5 / 7 badges, and every in-range close-position shape on the current string set is numbered
+  1–3 from the bass ([ADR 0003](docs/adr/0003-triad-shapes-on-the-neck.md)).
 - Chord name, notes, chord-relative formula, scale degree and roman numeral.
-- Triad inversion view: one close three-note voicing per string set, numbered from the bass note up.
+- String set is available as soon as a triad is selected. Inversion view keeps one inversion and
+  repeats it up the neck.
 
 **Study panel and focus mode**
 
@@ -100,14 +109,17 @@ src/
   state/           settings, persistence, and the fretboard view model
   components/      rendering only
   audio/           Web Audio pluck synth
+docs/adr/          architecture decision records
 ```
 
 Two rules keep the theory honest:
 
 1. **Pitch is separate from spelling.** Pitch is always an integer — a pitch class 0–11 or a MIDI
    number. Spelling is a `{ letter, alteration }` pair produced separately, which is why F# major is
-   spelled `F# G# A# B C# D# E#` rather than falling back to generic sharp names, and why switching
-   to flats changes the labels without touching a single calculation.
+   spelled `F# G# A# B C# D# E#` in the study panel rather than falling back to generic sharp names.
+   Fretboard *labels* then pass through `displaySpelling`: they follow Sharps / Flats (G major +
+   Flats writes G♭) without touching a single calculation. See
+   [ADR 0002](docs/adr/0002-display-spelling-follows-preference.md).
 2. **Scales are defined by degrees, not semitone lists.** Each scale lists degrees such as
    `1 2 b3 4 5 6 b7`. The degree number picks the letter, and the pitch class then determines the
    accidental. That gives correct spelling for every root, including the augmented second of
@@ -115,8 +127,9 @@ Two rules keep the theory honest:
 
 Shapes are generated the way they are built on the instrument: walk the scale upward in pitch and
 hand a fixed number of notes to each string in turn. Two notes per string gives the five pentatonic
-boxes; three notes per string gives the seven major-scale patterns. Tests pin the generated frets
-against the standard diagrams.
+boxes; three notes per string gives the seven connected positions. On a pentatonic or blues scale the
+3NPS set is built from the parent seven-note scale, the same parent harmony already uses. Tests pin
+the generated frets against the standard diagrams.
 
 ## Tests
 
@@ -133,18 +146,25 @@ The suite covers the parts where a mistake would be invisible but wrong:
 - fret geometry — fret 12 at half the scale length, cells narrowing monotonically toward the bridge,
   and a minimum width so labels fit;
 - generated shapes against the known A minor pentatonic boxes and the C major three-notes-per-string
-  pattern, for every root;
-- diatonic triads, seventh-chord naming, roman numerals and triad voicings;
-- settings normalisation and the fretboard view model, including the dimming rules.
+  pattern, for every root, plus 3NPS borrowed from the parent of a pentatonic;
+- diatonic triads, seventh-chord naming, roman numerals, and repeating close-position voicings;
+- accidental display spelling (F# / Gb) without breaking theoretical E# in C# major;
+- settings normalisation (including the schema 2 fret-window upgrade) and the fretboard view model,
+  including the dimming rules.
 
 ## Accessibility notes
 
 - Semantic landmarks, one `h1`, a skip link to the fretboard, and real form controls throughout.
 - Every marker carries an accessible description: note, interval, degree, string and fret.
 - Colour is never the only signal. Roots are rounded squares, scale tones are circles, chord roles
-  use solid/dotted/dashed/double outer rings, shape overlaps use a dashed ring, and voicing order is
-  numbered. The legend documents all of it.
+  use R / 3 / 5 / 7 badges plus solid/dotted/dashed/double rings, shape overlaps use a dashed ring,
+  and voicing order is numbered 1–3 from the bass. The legend documents all of it.
 - `prefers-reduced-motion` disables transitions and smooth scrolling.
+
+## Architecture decisions
+
+Why the default neck is 24 frets, how Sharps / Flats respells names, how triads show on the neck,
+and how 3NPS works on pentatonic scales: [docs/adr](docs/adr/README.md).
 
 ## Known limitations
 
@@ -153,8 +173,8 @@ The suite covers the parts where a mistake would be invisible but wrong:
 - Fret spacing is deliberately not fully proportional. True equal-temperament spacing makes the
   frets above 19 too narrow to label, so the taper is blended toward uniform width with a minimum
   cell size.
-- The inversion view shows one close voicing per string set and inversion, chosen as the lowest one
-  at or above the first visible fret. It is not a full voicing library.
+- Close-position triads on one string set, repeating up the neck. Inversion view filters to one
+  inversion. It is not a full voicing library: no skip-string shapes, no seventh voicings.
 - Seventh chords are shown as names, formulas and highlighted chord tones. There are no seventh
   *voicings* on the neck.
 - The synth is a single plucked voice, intended for checking what a note or shape sounds like rather
