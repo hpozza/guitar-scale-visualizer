@@ -1,0 +1,302 @@
+@import 'tailwindcss';
+
+/*
+ * Themes are plain CSS custom properties set on <html data-theme="...">.
+ * Every colour the UI uses comes from this block, so a theme swap never
+ * requires touching a component.
+ */
+
+:root,
+[data-theme='blacklight'] {
+  color-scheme: dark;
+
+  --bg: #08090c;
+  --bg-deep: #050608;
+  --surface: #0e1014;
+  --surface-raised: #14171d;
+  --surface-sunken: #0a0c10;
+  --border: #23272f;
+  --border-strong: #333944;
+
+  --text: #f3efe4;
+  --text-muted: #9aa3b0;
+  --text-dim: #6b7383;
+
+  --accent: #67e8f9;
+  --accent-soft: rgb(103 232 249 / 0.14);
+  --focus-ring: #67e8f9;
+
+  --board-top: #1b1e24;
+  --board-bottom: #101216;
+  --board-grain: rgb(255 255 255 / 0.028);
+  --fret-wire: #5a616d;
+  --fret-wire-octave: #8a93a1;
+  --nut: #cfd4dc;
+  --string: #7d8594;
+  --inlay: #4b525f;
+  --inlay-octave: #757f8e;
+
+  --note-root: #3ef08a;
+  --note-second: #8b7de8;
+  --note-third: #b072f5;
+  --note-fourth: #6fb9f0;
+  --note-tritone: #f2a24a;
+  --note-fifth: #a855f7;
+  --note-sixth: #7fd8c4;
+  --note-seventh: #d67ae0;
+  --note-chromatic: #59616e;
+
+  --on-note: #07090b;
+  --glow-strength: 0.55;
+  --board-texture: repeating-linear-gradient(
+    91deg,
+    rgb(255 255 255 / 0.022) 0px,
+    rgb(255 255 255 / 0) 2px,
+    rgb(0 0 0 / 0.03) 5px,
+    rgb(255 255 255 / 0) 7px
+  );
+}
+
+[data-theme='acid'] {
+  color-scheme: dark;
+
+  --bg: #050505;
+  --bg-deep: #000000;
+  --surface: #0d0e0c;
+  --surface-raised: #151713;
+  --surface-sunken: #090a08;
+  --border: #23261f;
+  --border-strong: #343930;
+
+  --text: #f2f3ea;
+  --text-muted: #9ba393;
+  --text-dim: #6c7366;
+
+  --accent: #ffb020;
+  --accent-soft: rgb(255 176 32 / 0.14);
+  --focus-ring: #ffb020;
+
+  --board-top: #1f221c;
+  --board-bottom: #111310;
+  --board-grain: rgb(182 255 46 / 0.02);
+  --fret-wire: #626a58;
+  --fret-wire-octave: #97a189;
+  --nut: #d8dccf;
+  --string: #838b78;
+  --inlay: #4c5246;
+  --inlay-octave: #757f69;
+
+  --note-root: #b6ff2e;
+  --note-second: #7f9c4a;
+  --note-third: #ffb020;
+  --note-fourth: #7fa88c;
+  --note-tritone: #ff6b3d;
+  --note-fifth: #d9f26a;
+  --note-sixth: #95b36b;
+  --note-seventh: #e0a94b;
+  --note-chromatic: #565c4e;
+
+  --on-note: #0a0c06;
+  --glow-strength: 0.6;
+  --board-texture: repeating-linear-gradient(
+    0deg,
+    rgb(255 255 255 / 0.018) 0px,
+    rgb(255 255 255 / 0) 3px,
+    rgb(0 0 0 / 0.04) 6px,
+    rgb(255 255 255 / 0) 9px
+  );
+}
+
+[data-theme='ultraviolet'] {
+  color-scheme: dark;
+
+  --bg: #06050a;
+  --bg-deep: #030207;
+  --surface: #100c1a;
+  --surface-raised: #181222;
+  --surface-sunken: #0b0812;
+  --border: #272036;
+  --border-strong: #3a3050;
+
+  --text: #f1ecf7;
+  --text-muted: #a49bba;
+  --text-dim: #72688a;
+
+  --accent: #38bdf8;
+  --accent-soft: rgb(56 189 248 / 0.14);
+  --focus-ring: #38bdf8;
+
+  --board-top: #201a2e;
+  --board-bottom: #130f1c;
+  --board-grain: rgb(216 180 254 / 0.025);
+  --fret-wire: #6b6084;
+  --fret-wire-octave: #9d90bb;
+  --nut: #ded5f0;
+  --string: #8d80ab;
+  --inlay: #534670;
+  --inlay-octave: #7d6da0;
+
+  --note-root: #c084fc;
+  --note-second: #6366f1;
+  --note-third: #ff2fb3;
+  --note-fourth: #38bdf8;
+  --note-tritone: #fb7185;
+  --note-fifth: #a78bfa;
+  --note-sixth: #22d3ee;
+  --note-seventh: #f472b6;
+  --note-chromatic: #574c70;
+
+  --on-note: #0b0713;
+  --glow-strength: 0.7;
+  --board-texture: repeating-linear-gradient(
+    91deg,
+    rgb(192 132 252 / 0.03) 0px,
+    rgb(255 255 255 / 0) 3px,
+    rgb(0 0 0 / 0.035) 6px,
+    rgb(255 255 255 / 0) 8px
+  );
+}
+
+[data-theme='studio'] {
+  color-scheme: dark;
+
+  --bg: #14100c;
+  --bg-deep: #0e0b08;
+  --surface: #1c1712;
+  --surface-raised: #241d16;
+  --surface-sunken: #171208;
+  --border: #33291f;
+  --border-strong: #46382a;
+
+  --text: #f3e9d2;
+  --text-muted: #b5a48a;
+  --text-dim: #8a7a63;
+
+  --accent: #c9a227;
+  --accent-soft: rgb(201 162 39 / 0.14);
+  --focus-ring: #c9a227;
+
+  --board-top: #3a2617;
+  --board-bottom: #24170e;
+  --board-grain: rgb(255 226 178 / 0.035);
+  --fret-wire: #b9a06a;
+  --fret-wire-octave: #ddc287;
+  --nut: #f0e2c3;
+  --string: #c7b184;
+  --inlay: #6a533a;
+  --inlay-octave: #8a6f4c;
+
+  --note-root: #7c9a72;
+  --note-second: #9c8352;
+  --note-third: #c9a227;
+  --note-fourth: #8a9c9a;
+  --note-tritone: #c2703f;
+  --note-fifth: #a8b38c;
+  --note-sixth: #90a08a;
+  --note-seventh: #b9994f;
+  --note-chromatic: #5a4a38;
+
+  --on-note: #140f08;
+  --glow-strength: 0.25;
+  --board-texture: repeating-linear-gradient(
+    88deg,
+    rgb(255 226 178 / 0.05) 0px,
+    rgb(0 0 0 / 0.05) 2px,
+    rgb(255 226 178 / 0.02) 4px,
+    rgb(0 0 0 / 0.04) 7px
+  );
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
+  --color-ink: var(--text);
+  --color-ink-muted: var(--text-muted);
+  --color-ink-dim: var(--text-dim);
+  --color-accent: var(--accent);
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+}
+
+* {
+  border-color: var(--border);
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overscroll-behavior-y: none;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(1200px 520px at 18% -10%, var(--accent-soft), transparent 70%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Scrollbars on the neck should read as part of the instrument, not the OS. */
+.nf-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+.nf-scroll::-webkit-scrollbar {
+  height: 10px;
+}
+.nf-scroll::-webkit-scrollbar-track {
+  background: var(--surface-sunken);
+  border-radius: 999px;
+}
+.nf-scroll::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+}
+
+.nf-board-surface {
+  background-image: var(--board-texture), linear-gradient(180deg, var(--board-top), var(--board-bottom));
+  background-blend-mode: overlay, normal;
+}
+
+.nf-note-glow {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--note-color) 55%, transparent),
+    0 0 12px color-mix(in srgb, var(--note-color) calc(var(--glow-strength) * 60%), transparent);
+}
+
+.nf-tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
