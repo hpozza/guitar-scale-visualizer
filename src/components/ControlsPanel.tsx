@@ -7,6 +7,7 @@ import { THEMES } from '../state/themes';
 import type { BoardView } from '../state/derived';
 import type { Settings } from '../state/settings';
 import { ROOT_PITCH_CLASSES, rootOptionLabel } from './rootOptions';
+import { SignatureSelect } from './SignatureSelect';
 import { Button } from './ui/Button';
 import { Field, Fieldset } from './ui/Field';
 import { Segmented } from './ui/Segmented';
@@ -86,7 +87,9 @@ export function ControlsPanel({
               id={id}
               name={name}
               value={settings.scaleId}
-              onChange={(event) => update({ scaleId: event.target.value, shapeIndex: null })}
+              onChange={(event) =>
+                update({ scaleId: event.target.value, signatureId: null, shapeIndex: null })
+              }
             >
               {SCALES.map((scale) => (
                 <option key={scale.id} value={scale.id}>
@@ -94,6 +97,22 @@ export function ControlsPanel({
                 </option>
               ))}
             </Select>
+          )}
+        </Field>
+
+        <Field
+          label="Signatures"
+          hint="Player vocabulary — still a real scale. The menu above keeps the theory name."
+          labelClassName="text-[var(--accent-signature)]"
+        >
+          {({ id, name, describedBy }) => (
+            <SignatureSelect
+              settings={settings}
+              update={update}
+              id={id}
+              name={name}
+              aria-describedby={describedBy}
+            />
           )}
         </Field>
 

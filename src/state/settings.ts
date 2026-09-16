@@ -7,6 +7,7 @@
 
 import { MAX_FRET, MIN_FRET, validateFretRange } from '../theory/fretboard';
 import { SCALES_BY_ID } from '../theory/scales';
+import { SIGNATURES_BY_ID } from '../theory/signatures';
 import { DEFAULT_THEME_ID, isThemeId } from './themes';
 
 export type LabelMode = 'names' | 'degrees' | 'intervals' | 'none';
@@ -15,6 +16,8 @@ export type ShapeKindSetting = 'pentatonic-box' | 'three-notes-per-string';
 export interface Settings {
   rootPitchClass: number;
   scaleId: string;
+  /** Player vocabulary preset, or null when the scale was chosen from theory. */
+  signatureId: string | null;
   preference: 'sharp' | 'flat';
   fretFrom: number;
   fretTo: number;
@@ -42,6 +45,7 @@ export interface Settings {
 export const DEFAULT_SETTINGS: Settings = {
   rootPitchClass: 9,
   scaleId: 'minor-pentatonic',
+  signatureId: null,
   preference: 'sharp',
   fretFrom: 0,
   fretTo: MAX_FRET,
@@ -97,6 +101,11 @@ export function normalizeSettings(input: unknown): Settings {
       ? raw.scaleId
       : DEFAULT_SETTINGS.scaleId;
 
+  const storedSignature =
+    typeof raw.signatureId === 'string' ? SIGNATURES_BY_ID[raw.signatureId] : undefined;
+  const signatureId =
+    storedSignature && storedSignature.scaleId === scaleId ? storedSignature.id : null;
+
   const schema =
     typeof raw.schema === 'number' && Number.isFinite(raw.schema) ? Math.round(raw.schema) : 1;
 
@@ -128,6 +137,7 @@ export function normalizeSettings(input: unknown): Settings {
   return {
     rootPitchClass: pickInteger(raw.rootPitchClass, 0, 11, DEFAULT_SETTINGS.rootPitchClass),
     scaleId,
+    signatureId,
     preference: pickEnum(raw.preference, ['sharp', 'flat'], DEFAULT_SETTINGS.preference),
     fretFrom: range.from,
     fretTo: range.to,

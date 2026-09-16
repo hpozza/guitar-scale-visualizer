@@ -22,9 +22,13 @@ network request after the page loads.
 
 **Controls**
 
-- Root note (all 12 chromatic notes), scale or mode, sharp/flat spelling toggle. Neck names follow
-  the toggle (G major + Flats writes G♭); scale-degree spelling in the study panel is unchanged
-  ([ADR 0002](docs/adr/0002-display-spelling-follows-preference.md)).
+- Root note (all 12 chromatic notes), scale or mode, Signatures (player vocabulary presets),
+  sharp/flat spelling toggle. Neck names follow the toggle (G major + Flats writes G♭); scale-degree
+  spelling in the study panel is unchanged
+  ([ADR 0002](docs/adr/0002-display-spelling-follows-preference.md)). Signatures write an existing
+  scale and keep the theory name in the Scale menu
+  ([ADR 0005](docs/adr/0005-player-signatures-are-presets.md)). The compact bar keeps Signatures
+  on a second row, so it stays available without opening Controls.
 - Fret range by number entry, sliders or presets, with graceful correction of impossible ranges.
 - Left-handed neck, note labels (names / degrees / intervals / hidden), show all notes, root notes
   only, single-interval highlight.
@@ -35,6 +39,13 @@ network request after the page loads.
 
 Major (Ionian), Dorian, Phrygian, Lydian, Mixolydian, Natural Minor (Aeolian), Locrian, Major
 Pentatonic, Minor Pentatonic, Blues, Harmonic Minor and Melodic Minor.
+
+**Signatures**
+
+Player presets (B.B. King, Stevie Ray Vaughan, Hendrix, Frusciante, Mayer, Page, Gilmour, Van Halen,
+Slash, Eric Johnson, Satriani, Santana, Paco de Lucía, Iommi, Rhoads, Yngwie). Each one applies a
+real scale from the list above and adds a short study note. Choosing a scale by name clears the
+player overlay.
 
 **Shapes**
 
@@ -63,7 +74,8 @@ Pentatonic, Minor Pentatonic, Blues, Harmonic Minor and Melodic Minor.
 
 The study panel lists the scale name, interval formula, step pattern, the notes in the selected key,
 the characteristic notes of the mode, a description of its sound, the parent major scale, the
-diatonic triads and a concrete practice instruction. Focus mode hides all of that and leaves the
+diatonic triads and a concrete practice instruction. A Signatures preset adds a player blurb on top
+of that; the formula still belongs to the real scale. Focus mode hides all of that and leaves the
 fretboard, the selectors and the legend.
 
 **Themes**

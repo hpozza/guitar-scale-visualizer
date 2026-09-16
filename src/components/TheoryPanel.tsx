@@ -1,6 +1,7 @@
 import { degreeSemitones, parseDegree } from '../theory/intervals';
 import { formatNote, spellPitchClass } from '../theory/notes';
 import { parentMajorPitchClass } from '../theory/scales';
+import { getSignature, signatureAlsoNames } from '../theory/signatures';
 import { ROLE_COLOR_VARIABLES, type BoardView } from '../state/derived';
 import type { Settings } from '../state/settings';
 import { DataRow, Panel } from './ui/Panel';
@@ -21,6 +22,8 @@ export function TheoryPanel({ board, settings }: TheoryPanelProps) {
     return { spec, tone };
   });
 
+  const signature = getSignature(settings.signatureId);
+  const alsoNames = signature ? signatureAlsoNames(signature) : [];
   const parentPitchClass = parentMajorPitchClass(scale);
   const parentName =
     parentPitchClass === null
@@ -39,6 +42,19 @@ export function TheoryPanel({ board, settings }: TheoryPanelProps) {
               </span>
             ) : null}
           </h3>
+          {signature ? (
+            <div className="mt-3 rounded-lg border border-[var(--accent-signature)]/40 bg-[var(--accent-signature-soft)] px-3 py-2.5">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--accent-signature)]">
+                Signature · {signature.name}
+              </p>
+              <p className="mt-1.5 text-sm leading-relaxed text-[var(--text)]">{signature.blurb}</p>
+              {alsoNames.length > 0 ? (
+                <p className="mt-1.5 text-xs leading-relaxed text-[var(--text-muted)]">
+                  Also uses {alsoNames.join(', ')}.
+                </p>
+              ) : null}
+            </div>
+          ) : null}
           <p className="mt-1.5 text-sm leading-relaxed text-[var(--text-muted)]">
             {definition.sound}
           </p>

@@ -24,6 +24,8 @@
 
   --accent: #67e8f9;
   --accent-soft: rgb(103 232 249 / 0.14);
+  --accent-signature: #f2a24a;
+  --accent-signature-soft: rgb(242 162 74 / 0.14);
   --focus-ring: #67e8f9;
 
   --board-top: #1b1e24;
@@ -74,6 +76,8 @@
 
   --accent: #ffb020;
   --accent-soft: rgb(255 176 32 / 0.14);
+  --accent-signature: #ff5c8a;
+  --accent-signature-soft: rgb(255 92 138 / 0.14);
   --focus-ring: #ffb020;
 
   --board-top: #1f221c;
@@ -124,6 +128,8 @@
 
   --accent: #38bdf8;
   --accent-soft: rgb(56 189 248 / 0.14);
+  --accent-signature: #f5c542;
+  --accent-signature-soft: rgb(245 197 66 / 0.14);
   --focus-ring: #38bdf8;
 
   --board-top: #201a2e;
@@ -174,6 +180,8 @@
 
   --accent: #c9a227;
   --accent-soft: rgb(201 162 39 / 0.14);
+  --accent-signature: #6ec4b0;
+  --accent-signature-soft: rgb(110 196 176 / 0.14);
   --focus-ring: #c9a227;
 
   --board-top: #3a2617;
