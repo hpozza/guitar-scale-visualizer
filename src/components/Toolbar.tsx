@@ -2,6 +2,7 @@ import { SCALES } from '../theory/scales';
 import { THEMES } from '../state/themes';
 import type { Settings } from '../state/settings';
 import { ROOT_PITCH_CLASSES, rootOptionLabel } from './rootOptions';
+import { SignatureSelect } from './SignatureSelect';
 import { Button } from './ui/Button';
 import { Select } from './ui/Select';
 import { Segmented } from './ui/Segmented';
@@ -78,7 +79,9 @@ export function Toolbar({
                 aria-label="Scale or mode"
                 className="w-[13rem]"
                 value={settings.scaleId}
-                onChange={(event) => update({ scaleId: event.target.value, shapeIndex: null })}
+                onChange={(event) =>
+                  update({ scaleId: event.target.value, signatureId: null, shapeIndex: null })
+                }
               >
                 {SCALES.map((scale) => (
                   <option key={scale.id} value={scale.id}>
@@ -86,6 +89,13 @@ export function Toolbar({
                   </option>
                 ))}
               </Select>
+            </label>
+
+            <label className="flex items-center gap-2">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--accent-signature)]">
+                Signatures
+              </span>
+              <SignatureSelect settings={settings} update={update} className="w-[15rem]" />
             </label>
 
             <div className="w-[8.5rem]">

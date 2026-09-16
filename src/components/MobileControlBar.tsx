@@ -1,6 +1,7 @@
 import { SCALES } from '../theory/scales';
 import type { Settings } from '../state/settings';
 import { ROOT_PITCH_CLASSES, rootOptionLabel } from './rootOptions';
+import { SignatureSelect } from './SignatureSelect';
 import { Select } from './ui/Select';
 import { Segmented } from './ui/Segmented';
 
@@ -40,7 +41,9 @@ export function MobileControlBar({ settings, update, onOpenControls }: MobileCon
             className="h-11"
             aria-label="Scale or mode"
             value={settings.scaleId}
-            onChange={(event) => update({ scaleId: event.target.value, shapeIndex: null })}
+            onChange={(event) =>
+              update({ scaleId: event.target.value, signatureId: null, shapeIndex: null })
+            }
           >
             {SCALES.map((scale) => (
               <option key={scale.id} value={scale.id}>
@@ -74,6 +77,13 @@ export function MobileControlBar({ settings, update, onOpenControls }: MobileCon
           Controls
         </button>
       </div>
+
+      <label className="mt-2 block min-w-0">
+        <span className="mb-1 block text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--accent-signature)]">
+          Signatures
+        </span>
+        <SignatureSelect settings={settings} update={update} className="h-11" />
+      </label>
     </div>
   );
 }

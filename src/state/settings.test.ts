@@ -49,10 +49,32 @@ describe('settings normalisation', () => {
   });
 
   it('accepts null for the optional selections', () => {
-    const settings = normalizeSettings({ shapeIndex: null, chordDegree: null, highlightInterval: null });
+    const settings = normalizeSettings({
+      shapeIndex: null,
+      chordDegree: null,
+      highlightInterval: null,
+      signatureId: null,
+    });
     expect(settings.shapeIndex).toBeNull();
     expect(settings.chordDegree).toBeNull();
     expect(settings.highlightInterval).toBeNull();
+    expect(settings.signatureId).toBeNull();
+  });
+
+  it('keeps a signature only when it matches the stored scale', () => {
+    const matched = normalizeSettings({ scaleId: 'dorian', signatureId: 'santana' });
+    expect(matched.signatureId).toBe('santana');
+    expect(matched.scaleId).toBe('dorian');
+
+    const mismatched = normalizeSettings({ scaleId: 'mixolydian', signatureId: 'santana' });
+    expect(mismatched.signatureId).toBeNull();
+    expect(mismatched.scaleId).toBe('mixolydian');
+  });
+
+  it('rejects unknown signatures', () => {
+    const settings = normalizeSettings({ scaleId: 'dorian', signatureId: 'fake-player' });
+    expect(settings.signatureId).toBeNull();
+    expect(settings.scaleId).toBe('dorian');
   });
 
   it('clamps a stored chord degree into I-VII', () => {

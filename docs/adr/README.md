@@ -8,5 +8,6 @@ Decisions that changed how Guitar Scale Visualizer behaves. Each file is the why
 | [0002](0002-display-spelling-follows-preference.md) | Fretboard names follow the accidental preference | Accepted |
 | [0003](0003-triad-shapes-on-the-neck.md) | Close-position triad shapes on the selected string set | Accepted |
 | [0004](0004-three-notes-per-string-from-parent-scale.md) | 3NPS patterns from the parent seven-note scale | Accepted |
+| [0005](0005-player-signatures-are-presets.md) | Player signatures are presets, not extra scales | Accepted |
 
 New records get the next number. Do not rewrite an accepted ADR; add a superseding one instead.
