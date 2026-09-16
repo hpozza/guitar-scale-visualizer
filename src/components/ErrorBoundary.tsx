@@ -17,7 +17,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 
   componentDidCatch(error: Error, info: ErrorInfo): void {
-    console.error('Neon Fretboard failed to render', error, info.componentStack);
+    console.error('Guitar Scale Visualizer failed to render', error, info.componentStack);
   }
 
   private handleReset = () => {

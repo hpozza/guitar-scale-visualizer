@@ -1,4 +1,4 @@
-# Neon Fretboard
+# Guitar Scale Visualizer
 
 An offline guitar study tool for scales, modes, intervals, triads and movable fretboard patterns.
 Everything — the fret geometry, the note spelling, the shapes and the diatonic harmony — is

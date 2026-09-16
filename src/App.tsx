@@ -74,7 +74,7 @@ export default function App() {
         <div className="rounded-2xl border border-[var(--border-strong)] bg-[var(--surface)] p-6">
           <h1 className="text-lg font-bold text-[var(--text)]">Saved settings could not be read</h1>
           <p className="mt-2 text-sm leading-relaxed text-[var(--text-muted)]">
-            {error} Neon Fretboard can start from its defaults instead — A minor pentatonic, frets 0
+            {error} Guitar Scale Visualizer can start from its defaults instead — A minor pentatonic, frets 0
             to 24.
           </p>
           <div className="mt-4">
@@ -326,7 +326,7 @@ export default function App() {
 
       <footer className="mx-auto w-full max-w-[1800px] px-3 pb-3 sm:px-5">
         <p className="text-[11px] leading-relaxed text-[var(--text-dim)]">
-          Neon Fretboard runs entirely in your browser. Every scale, shape and chord is calculated
+          Guitar Scale Visualizer runs entirely in your browser. Every scale, shape and chord is calculated
           locally from pitch classes, and your settings stay in this browser only.
         </p>
       </footer>

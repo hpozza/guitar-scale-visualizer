@@ -41,7 +41,9 @@ export function Toolbar({
             />
           </span>
           <div className="leading-tight">
-            <h1 className="text-sm font-bold tracking-tight text-[var(--text)]">Neon Fretboard</h1>
+            <h1 className="text-sm font-bold tracking-tight text-[var(--text)]">
+              Guitar Scale Visualizer
+            </h1>
             <p className="hidden text-[10px] uppercase tracking-[0.14em] text-[var(--text-dim)] sm:block">
               Scales · Modes · Shapes · Harmony
             </p>

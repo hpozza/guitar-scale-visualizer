@@ -63,6 +63,7 @@ export const DEFAULT_SETTINGS: Settings = {
   controlsOpen: true,
 };
 
+/** Legacy key from the old product name. Kept so saved settings survive the rename. */
 export const STORAGE_KEY = 'neon-fretboard.settings.v1';
 
 /** Written into localStorage so old 15-fret defaults can be upgraded once. */

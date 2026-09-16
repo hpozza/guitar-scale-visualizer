@@ -30,4 +30,4 @@ The presets (Full neck / Open / Middle / Upper) stay as the way to pick a window
 
 - First load and one-time upgrade of the old default show frets 0–24. Horizontal scroll covers the upper octave.
 - An explicit 0–15 choice survives reloads after the schema bump.
-- `STORAGE_KEY` stays `neon-fretboard.settings.v1`; schema lives inside the JSON so we do not throw away other saved fields.
+- `STORAGE_KEY` stays `neon-fretboard.settings.v1` (legacy id from the old product name); schema lives inside the JSON so we do not throw away other saved fields.

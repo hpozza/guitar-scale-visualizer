@@ -1,6 +1,6 @@
 # Architecture decision records
 
-Decisions that changed how Neon Fretboard behaves. Each file is the why; the code is the how.
+Decisions that changed how Guitar Scale Visualizer behaves. Each file is the why; the code is the how.
 
 | ADR | Title | Status |
 | --- | --- | --- |
