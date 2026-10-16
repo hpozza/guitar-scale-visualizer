@@ -30,6 +30,7 @@ import type { LabelMode, Settings } from './settings';
 export type Emphasis = 'primary' | 'secondary' | 'muted';
 
 export interface NoteView {
+  isBlueNote: boolean;
   note: FretboardNote;
   key: string;
   visible: boolean;
@@ -186,6 +187,7 @@ export function buildBoardView(settings: Settings): BoardView {
       }
 
       return {
+        isBlueNote: note.tone?.isBlueNote ?? false,
         note,
         key,
         visible,

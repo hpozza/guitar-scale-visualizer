@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+:root {
+  --note-blue: #60a5fa;
+}
+
 /*
  * Themes are plain CSS custom properties set on <html data-theme="...">.
  * Every colour the UI uses comes from this block, so a theme swap never

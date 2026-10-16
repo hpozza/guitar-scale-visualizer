@@ -166,6 +166,36 @@ describe('three notes per string', () => {
 });
 
 describe('shape sets', () => {
+  it('includes both blue notes in the classic A minor blues box at frets 5–8', () => {
+    const scale = buildScale({ rootPitchClass: 9, scaleId: 'blues', preference: 'sharp' });
+    const box = buildShapeSet(STANDARD_TUNING, scale, 'pentatonic-box').shapes[0];
+    expect(fretRows(box)).toEqual([[5, 8], [5, 6, 7], [5, 7], [5, 7, 8], [5, 8], [5, 8]]);
+  });
+  it('adds blues passing tones to all five pentatonic boxes in every key', () => {
+    for (const scaleId of ['blues', 'major-blues']) {
+      for (let root = 0; root < 12; root += 1) {
+        const scale = buildScale({ rootPitchClass: root, scaleId, preference: 'sharp' });
+        const set = buildShapeSet(STANDARD_TUNING, scale, 'pentatonic-box');
+        const base = pentatonicBoxes(STANDARD_TUNING, buildScale({
+          rootPitchClass: root,
+          scaleId: scale.definition.pentatonicSourceId!,
+          preference: 'sharp',
+        }));
+        expect(set.shapes).toHaveLength(5);
+        expect(set.unavailableReason).toBeNull();
+        set.shapes.forEach((shape, index) => {
+          for (const key of base[index].keys) expect(shape.keys.has(key)).toBe(true);
+          expect(shape.notes.some((note) => note.midi % 12 === scale.tones.find((tone) => tone.isBlueNote)?.pitchClass)).toBe(true);
+          for (const note of shape.notes) {
+            expect(scale.pitchClasses).toContain(note.midi % 12);
+            expect(note.fret).toBeGreaterThanOrEqual(0);
+            expect(note.fret).toBeLessThanOrEqual(24);
+          }
+        });
+      }
+    }
+  });
+
   it('explains why pentatonic boxes are unavailable', () => {
     const cMajor = buildScale({ rootPitchClass: 0, scaleId: 'ionian', preference: 'sharp' });
     const set = buildShapeSet(STANDARD_TUNING, cMajor, 'pentatonic-box');

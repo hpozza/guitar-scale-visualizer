@@ -28,6 +28,7 @@ describe('mode intervals', () => {
     expect(semitoneSet('major-pentatonic')).toEqual([0, 2, 4, 7, 9]);
     expect(semitoneSet('minor-pentatonic')).toEqual([0, 3, 5, 7, 10]);
     expect(semitoneSet('blues')).toEqual([0, 3, 5, 6, 7, 10]);
+    expect(semitoneSet('major-blues')).toEqual([0, 2, 3, 4, 7, 9]);
     expect(semitoneSet('harmonic-minor')).toEqual([0, 2, 3, 5, 7, 8, 11]);
     expect(semitoneSet('melodic-minor')).toEqual([0, 2, 3, 5, 7, 9, 11]);
   });
@@ -56,6 +57,11 @@ describe('mode intervals', () => {
 });
 
 describe('scale spelling', () => {
+  it('spells the major blues passing third separately from its major third', () => {
+    const scale = buildScale({ rootPitchClass: 0, scaleId: 'major-blues', preference: 'flat' });
+    expect(asciiNames(scale)).toEqual(['C', 'D', 'Eb', 'E', 'G', 'A']);
+    expect(scale.tones.filter((tone) => tone.isBlueNote).map((tone) => tone.semitones)).toEqual([3]);
+  });
   it('spells C major with no accidentals', () => {
     const scale = buildScale({ rootPitchClass: 0, scaleId: 'ionian', preference: 'sharp' });
     expect(asciiNames(scale)).toEqual(['C', 'D', 'E', 'F', 'G', 'A', 'B']);

@@ -148,8 +148,8 @@ export function Legend({ board, settings, onHighlightInterval }: LegendProps) {
                     tone.semitones === 0 ? 'rounded-[6px] border-2' : 'rounded-full border'
                   }`}
                   style={{
-                    background: ROLE_COLOR_VARIABLES[tone.interval.role],
-                    borderColor: ROLE_COLOR_VARIABLES[tone.interval.role],
+                    background: tone.isBlueNote ? 'var(--note-blue)' : ROLE_COLOR_VARIABLES[tone.interval.role],
+                    borderColor: tone.isBlueNote ? 'var(--note-blue)' : ROLE_COLOR_VARIABLES[tone.interval.role],
                     color: 'var(--on-note)',
                   }}
                 >
@@ -161,7 +161,7 @@ export function Legend({ board, settings, onHighlightInterval }: LegendProps) {
                     <span className="font-normal text-[var(--text-dim)]">{tone.interval.short}</span>
                   </span>
                   <span className="block text-[10px] uppercase tracking-[0.08em] text-[var(--text-dim)]">
-                    {INTERVAL_ROLE_LABELS[tone.interval.role]}
+                    {tone.isBlueNote ? 'Blue note · B badge' : INTERVAL_ROLE_LABELS[tone.interval.role]}
                   </span>
                 </span>
               </button>

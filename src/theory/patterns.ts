@@ -178,12 +178,34 @@ export function buildShapeSet(
   preference: AccidentalPreference = 'sharp',
 ): ShapeSet {
   if (kind === 'pentatonic-box') {
-    const shapes = pentatonicBoxes(tuning, scale);
+    const sourceScale = scale.definition.pentatonicSourceId
+      ? buildScale({
+          rootPitchClass: scale.rootPitchClass,
+          scaleId: scale.definition.pentatonicSourceId,
+          preference,
+          rootSpelling: scale.rootSpelled,
+        })
+      : scale;
+    const shapes = pentatonicBoxes(tuning, sourceScale).map((box) => {
+      if (sourceScale === scale) return box;
+      const notes = [...box.notes];
+      const bluePitchClass = scale.tones.find((tone) => tone.isBlueNote)?.pitchClass;
+      for (let stringIndex = 0; stringIndex < tuning.openMidi.length; stringIndex += 1) {
+        for (let fret = box.lowestFret; fret <= box.highestFret; fret += 1) {
+          const midi = tuning.openMidi[stringIndex] + fret;
+          if (mod12(midi) === bluePitchClass) notes.push({ stringIndex, fret, midi });
+        }
+      }
+      notes.sort((a, b) => a.stringIndex - b.stringIndex || a.fret - b.fret);
+      return toShape(box.id, box.name, box.lowestDegreeLabel, notes);
+    });
     return {
       kind,
       label: 'Pentatonic boxes',
       shapes,
-      derivedFromNote: null,
+      derivedFromNote: sourceScale === scale
+        ? null
+        : `Five ${sourceScale.definition.name.toLowerCase()} boxes with blue notes added within each box's fret span. Blue notes carry a B badge.`,
       unavailableReason: shapes.length
         ? null
         : `Pentatonic boxes are five-note shapes, and ${scale.definition.name} has ${scale.pitchClasses.length} notes. Switch to a pentatonic scale to study the boxes.`,

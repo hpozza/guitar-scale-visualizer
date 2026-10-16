@@ -288,7 +288,7 @@ export function ControlsPanel({
       <Section title="Shapes and patterns">
         <Fieldset
           legend="Shape family"
-          hint="Pentatonic boxes put two notes on each string. 3NPS puts three notes on each string and walks seven connected positions up the neck. Click a family to light Pattern 1 / Box 1 immediately."
+          hint="Pentatonic boxes put two notes on each string, with blue notes added for blues scales. 3NPS puts three notes on each string across seven positions. Click a family to select Pattern 1 / Box 1."
         >
           <Segmented
             label="Shape family"
