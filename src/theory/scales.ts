@@ -44,6 +44,9 @@ export interface ScaleDefinition {
    * has fewer than seven tones.
    */
   harmonySourceId?: string;
+  /** Added passing tone in a blues scale. */
+  blueNoteDegree?: string;
+  pentatonicSourceId?: string;
   /** Degrees that give the scale its identity, in compact notation. */
   characteristicDegrees: string[];
   /** How the scale sounds, in plain language. */
@@ -158,14 +161,29 @@ export const SCALES: ScaleDefinition[] = [
   },
   {
     id: 'blues',
-    name: 'Blues Scale',
+    name: 'Minor Blues',
     family: 'blues',
     degreeSpec: ['1', 'b3', '4', 'b5', '5', 'b7'],
     harmonySourceId: 'aeolian',
+    blueNoteDegree: 'b5',
+    pentatonicSourceId: 'minor-pentatonic',
     characteristicDegrees: ['b5'],
     sound: 'Minor pentatonic with a passing flat fifth. The added note is a colour tone, not a resting place.',
     parentRelation: 'Minor pentatonic plus the chromatic b5 between the 4th and 5th.',
     practice: 'Approach the b5 from the 4th and leave it immediately for the 5th so it stays a passing note.',
+  },
+  {
+    id: 'major-blues',
+    name: 'Major Blues',
+    family: 'blues',
+    degreeSpec: ['1', '2', 'b3', '3', '5', '6'],
+    harmonySourceId: 'ionian',
+    blueNoteDegree: 'b3',
+    pentatonicSourceId: 'major-pentatonic',
+    characteristicDegrees: ['b3', '3'],
+    sound: 'Sweet major pentatonic with a bluesy passing minor third leading into the major third.',
+    parentRelation: 'Major pentatonic plus the chromatic b3 between the 2nd and 3rd.',
+    practice: 'Play 2, b3, 3 and resolve to the root. Compare the blue b3 with the b5 of minor blues.',
   },
   {
     id: 'harmonic-minor',
@@ -199,6 +217,7 @@ export function getScale(id: string): ScaleDefinition | undefined {
 }
 
 export interface ScaleTone {
+  isBlueNote: boolean;
   degree: Degree;
   degreeLabel: string;
   semitones: number;
@@ -257,6 +276,7 @@ export function buildScale(options: BuildScaleOptions): Scale {
     const pitchClass = mod12(rootPitchClass + semitones);
     const spelled = spellDegree(rootSpelled, degree);
     return {
+      isBlueNote: spec === definition.blueNoteDegree,
       degree,
       degreeLabel: formatDegree(degree),
       semitones,

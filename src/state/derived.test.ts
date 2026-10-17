@@ -41,6 +41,18 @@ describe('board view visibility', () => {
 });
 
 describe('shape focus', () => {
+  it('identifies only the blue note and keeps it highlighted inside blues boxes', () => {
+    for (const [scaleId, blueInterval] of [['blues', 6], ['major-blues', 3]] as const) {
+      const board = view({ scaleId, shapeKind: 'pentatonic-box', shapeIndex: 0 });
+      const blueNotes = flat(board.rows).filter((item) => item.isBlueNote);
+      expect(blueNotes.length).toBeGreaterThan(0);
+      expect(blueNotes.every((item) => item.note.semitonesFromRoot === blueInterval)).toBe(true);
+      expect(blueNotes.some((item) => item.inShape && item.visible && item.emphasis === 'secondary')).toBe(true);
+      expect(flat(board.rows).filter((item) => !item.isBlueNote).every((item) => item.note.semitonesFromRoot !== blueInterval)).toBe(true);
+    }
+    expect(flat(view().rows).some((item) => item.isBlueNote)).toBe(false);
+  });
+
   it('dims notes outside the selected shape', () => {
     const board = view({ shapeIndex: 0, shapeKind: 'pentatonic-box' });
     expect(board.activeShape?.name).toBe('Box 1');

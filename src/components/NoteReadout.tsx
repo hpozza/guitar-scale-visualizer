@@ -21,8 +21,8 @@ export function NoteReadout({ note, hint }: NoteReadoutProps) {
               note.note.isRoot ? 'rounded-[9px] border-2' : 'rounded-full border'
             }`}
             style={{
-              background: ROLE_COLOR_VARIABLES[note.role],
-              borderColor: ROLE_COLOR_VARIABLES[note.role],
+              background: note.isBlueNote ? 'var(--note-blue)' : ROLE_COLOR_VARIABLES[note.role],
+              borderColor: note.isBlueNote ? 'var(--note-blue)' : ROLE_COLOR_VARIABLES[note.role],
               color: 'var(--on-note)',
             }}
           >
@@ -53,6 +53,7 @@ export function NoteReadout({ note, hint }: NoteReadoutProps) {
               </dt>
               <dd className="text-[var(--text)]">
                 {note.degreeLabel}
+                {note.isBlueNote ? ' · Blue note' : ''}
                 {note.note.inScale ? '' : ' (outside the scale)'}
               </dd>
             </div>

@@ -15,6 +15,7 @@ export function describeNote(item: NoteView): string {
     note.fret === 0 ? 'open string' : `fret ${note.fret}`,
   ];
   if (!note.inScale) parts.push('outside the scale');
+  if (item.isBlueNote) parts.push('blue note');
   if (item.chordRole) parts.push(`chord ${item.chordRole}`);
   return parts.join(', ');
 }

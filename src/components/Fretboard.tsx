@@ -332,7 +332,7 @@ interface NoteMarkerProps {
 function NoteMarker({ item, size, labelMode }: NoteMarkerProps) {
   if (!item.visible) return null;
 
-  const color = ROLE_COLOR_VARIABLES[item.role];
+  const color = item.isBlueNote ? 'var(--note-blue)' : ROLE_COLOR_VARIABLES[item.role];
   const muted = item.emphasis === 'muted';
   const primary = item.emphasis === 'primary';
   const label = item.label;
@@ -367,6 +367,16 @@ function NoteMarker({ item, size, labelMode }: NoteMarkerProps) {
           {labelMode === 'none' ? '' : label}
         </span>
       </span>
+
+      {item.isBlueNote ? (
+        <span
+          aria-hidden="true"
+          className="absolute -right-1.5 -top-2 flex h-3.5 w-3.5 items-center justify-center rounded-sm text-[8px] font-extrabold"
+          style={{ background: 'var(--note-blue)', color: '#081326', opacity: muted ? 0.5 : 1 }}
+        >
+          B
+        </span>
+      ) : null}
 
       {item.chordRole ? (
         <>

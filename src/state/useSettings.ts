@@ -63,7 +63,13 @@ export function useSettings(): SettingsController {
   }, [settings, status]);
 
   const update = useCallback((patch: Partial<Settings>) => {
-    setSettings((current) => ({ ...current, ...patch }));
+    setSettings((current) => ({
+      ...current,
+      ...(patch.shapeKind !== undefined || typeof patch.shapeIndex === 'number'
+        ? { chordDegree: null, inversionView: false, highlightInterval: null }
+        : {}),
+      ...patch,
+    }));
   }, []);
 
   const reset = useCallback(() => {

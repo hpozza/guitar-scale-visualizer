@@ -14,6 +14,7 @@ import { TheoryPanel } from './components/TheoryPanel';
 import { Toolbar } from './components/Toolbar';
 import { Button } from './components/ui/Button';
 import { Panel } from './components/ui/Panel';
+import { Segmented } from './components/ui/Segmented';
 
 export default function App() {
   const { settings, status, error, update, reset, dismissError, persisted } = useSettings();
@@ -168,10 +169,19 @@ export default function App() {
               </Button>
             </div>
 
+            <Segmented
+              label="Shape visualization"
+              value={settings.shapeKind}
+              onChange={(shapeKind) => update({
+                shapeKind, shapeIndex: null, chordDegree: null,
+                inversionView: false, highlightInterval: null,
+              })}
+              options={[
+                { value: 'pentatonic-box', label: 'Pentatonic shapes' },
+                { value: 'three-notes-per-string', label: '3 notes per string' },
+              ]}
+            />
             <div className="flex flex-wrap items-center gap-1.5">
-              <span className="mr-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--text-dim)]">
-                {settings.shapeKind === 'three-notes-per-string' ? '3NPS' : 'Box'}
-              </span>
               {board.shapeSet.shapes.length > 0 ? (
                 <>
                   {board.shapeSet.shapes.map((shape, index) => (
@@ -184,6 +194,9 @@ export default function App() {
                       onClick={() =>
                         update({
                           shapeIndex: settings.shapeIndex === index ? null : index,
+                          chordDegree: null,
+                          inversionView: false,
+                          highlightInterval: null,
                         })
                       }
                     >
